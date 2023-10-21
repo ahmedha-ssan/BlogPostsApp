@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} Add users page{% endblock %}
+{% block content %}
+
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Hey {{name}} {{msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
+
+{% if name %}
+<h1>User added...</h1>
+<br /><br />
+{% for ouruser in ourUsers %}
+<tr>
+    <td>
+        {{ ouruser.id }} -
+        <a href="{{url_for('update', id=ouruser.id)}}">{{ ouruser.name }}</a>-
+        {{ouruser.username}} -
+        {{ ouruser.email }} -
+        {{ouruser.fav_color}} -
+        <a href="/delete/{{ouruser.id}}">Delete</a>
+    </td>
+</tr>
+
+<br />
+{% endfor %}
+{% else %}
+<h1>User list </h1>
+<br />
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.name.label(class="form-label") }}
+    {{ form.name(class="form-control") }}
+    <br /><br />
+    {{ form.username.label(class="form-label") }}
+    {{ form.username(class="form-control") }}
+    <br /><br />
+
+    {{ form.email.label(class="form-label") }}
+    {{ form.email(class="form-control") }}
+    <br /><br />
+    {{ form.fav_color.label(class="form-label") }}
+    {{ form.fav_color(class="form-control") }}
+    <br /><br />
+    {{ form.password_hash.label(class="form-label") }}
+    {{ form.password_hash(class="form-control") }}
+    <br /><br />
+    {{ form.password_hash2.label(class="form-label") }}
+    {{ form.password_hash2(class="form-control") }}
+    <br /><br />
+    {{ form.submit(class="btn btn-secondary") }}
+</form>
+
+<br /><br />
+
+{% for ouruser in ourUsers %}
+
+{{ ouruser.id }} -
+<a href="{{url_for('update', id=ouruser.id)}}">{{ ouruser.name }}</a> -
+{{ ouruser.email }} -
+{{ouruser.fav_color }} -
+<a href="{{url_for('delete', id=ouruser.id)}}">Delete</a>
+<br />
+{% endfor %}
+<br />
+
+
+{% endif %}
+{% endblock %}

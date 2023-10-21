@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %} Search page{% endblock %}
+
+{% block content %}
+<br /><br />
+<h1>You searched for:
+    <em>{{searched}}</em>
+</h1>
+<br>
+{% if postss %}
+{%for post in postss %}
+<div class="shadow p-3 mb-5 bg-body rounded">
+
+    <h2>{{post.title}}</h2>
+    <small>
+        By: {{post.poster.name}}<br />
+        {{post.datePosted}} | {{post.slug}}
+    </small><br /><br />
+    {{post.content|safe}}
+    <br /><br />
+    <a href="{{url_for('eachPost',id= post.id)}}" class="btn btn-outline-secondary">View post</a>
+    {% if post.poster_FK == current_user.id %}
+    <a href="{{url_for('editPost',id= post.id)}}" class="btn btn-outline-secondary">Edit post</a>
+    <a href="{{url_for('delPost',id= post.id)}}" class="btn btn-outline-danger">Delete post</a>
+    {%endif%}
+    <hr />
+
+</div>
+<br>
+<br>
+{%endfor%}
+{%else%}
+<h1>Sorry youe search tern: <strong>{{searched}}</strong> was not found
+</h1>
+{% endif %}
+{% endblock %}

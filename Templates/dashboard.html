@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard page{% endblock %}
+{% block content %}
+
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Hey {{name}} {{msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
+
+<h1>Dashboard</h1>
+<br /><br />
+<div class="card bg-dark text-light">
+    <div class="card-header">
+        {{ current_user.name }}
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <strong>Name: </strong>{{current_user.name}}<br>
+                    <strong>User name: </strong>{{current_user.username}}<br>
+                    <strong>User ID: </strong>{{current_user.id}}<br>
+                    <strong>Email: </strong>{{current_user.email}}<br>
+                    <strong>Favorite Color: </strong>{{current_user.fav_color}}<br>
+                    <strong>Date Joined: </strong>{{current_user.date_added }}<br>
+                    <strong>About author: </strong>{{current_user.about_author }}<br>
+                    <strong>Profile pic: </strong>{{current_user.profilepic }}<br>
+
+                    <br>
+                    <a href="{{url_for('logout')}}" class="btn btn-danger">Logout</a>
+                    <a href="{{url_for('update', id=current_user.id)}}" class="btn btn-secondary">Update profile</a>
+                    <a href="{{url_for('delete',id=current_user.id)}}" class="btn btn-danger">Delete</a>
+                    <br><br>
+                </div>
+
+                <div class="col-4">
+                    {% if current_user.profilepic %}
+
+                    <img src="{{url_for('static',filename='images/'+current_user.profilepic)}}" width="222"
+                        align="right">
+
+                    {% else %}
+
+                    <img src="{{url_for('static',filename='images/defaultPP.jpg')}}" width="222" align="right">
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

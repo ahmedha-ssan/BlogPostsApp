@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Home Page{% endblock %}
+
+{% block content %}
+
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Hey {{msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+<h1>Welcome on home page</h1>
+
+{% endblock %}

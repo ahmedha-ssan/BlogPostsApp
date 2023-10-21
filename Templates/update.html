@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} Update users page{% endblock %}
+{% block content %}
+
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Hey {{name}} {{msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
+{% if id == current_user.id %}
+
+<h1>Update user...</h1>
+Current ID: {{id}}
+<br />
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST" action="/update/{{name_update.id}}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control",value=name_update.name) }}
+        <br />
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control",value=name_update.username) }}
+        <br />
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control",value=name_update.email) }}
+        <br />
+        {{ form.fav_color.label(class="form-label") }}
+        {{ form.fav_color(class="form-control",value=name_update.fav_color) }}
+        <br />
+
+        {{ form.about_author.label(class="form-label") }}
+        <textarea name="about_author" class="form-control">{{ name_update.about_author }}</textarea>
+        <br /><br />
+        {{ form.profilepic.label(class="form-label") }}
+        {{ form.profilepic(class="form-control",value=name_update.profilepic) }}
+        <br />
+
+
+        {{ form.submit(class="btn btn-secondary") }}
+        <a href="{{url_for('delete',id=current_user.id)}}" class="btn btn-danger">Delete</a>
+
+    </form>
+</div>
+<br /><br />
+{% endif %}
+{% endblock %}
